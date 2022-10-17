@@ -1,0 +1,55 @@
+<div class="container text-center mt-2">
+  <div class="row">
+    <div class="col align-self-start">
+    </div>
+    <div class="col align-self-center">
+      <div class="card text-center" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title">{{tarea}} Cliente</h5>
+          
+          <form [formGroup]="miFormulario" autocomplete="off" (ngSubmit)="guardarEditar()" class="p-4">
+            
+            <div class="mb-3">
+              <label class="form-label">Nombre</label>
+              <input formControlName="nombre" type="text" class="form-control" id="formGroupExampleInput">
+              <small *ngIf="validacionCampos('nombre')" class="form-text text-danger">
+                campo requerido minimo 5 caracteres
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Apellido</label>
+              <input formControlName="apellido" type="text" class="form-control" id="formGroupExampleInput">
+              <small *ngIf="validacionCampos('apellido')" class="form-text text-danger">
+                campo requerido minimo 5 caracteres
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Edad</label>
+              <input formControlName="edad" type="number" min="10" max="200" class="form-control" id="formGroupExampleInput">
+              <small *ngIf="validacionCampos('edad')" class="form-text text-danger">
+                campo requerido minimo 10
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Direccion</label>
+              <input formControlName="direccion" type="text" class="form-control" id="formGroupExampleInput">
+              <small *ngIf="validacionCampos('nombre')" class="form-text text-danger">
+                campo requerido
+              </small>
+            </div>
+
+            <button type="submit" [disabled]="miFormulario.invalid"
+                        class="btn btn-primary mt-3">{{tarea}}</button>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+    <div class="col align-self-end">
+    </div>
+  </div>
+</div>

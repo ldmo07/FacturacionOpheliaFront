@@ -1,0 +1,98 @@
+<div class="form-inline mb-3 justify-content-center  align-items-center">
+    <button (click)="irAgregar()" mat-stroked-button color="primary" class="m-1">
+      Agregar
+      <span class="material-symbols-outlined">
+          add
+          </span>
+    </button>
+      
+      <button (click)="mostrarTablaDev()" mat-stroked-button color="primary" class="m-1">
+        {{!verTablaDev ? 'Ver tabla DevExpres': 'Ocultar tabla DevExpres'}}
+        <span class="material-symbols-outlined">
+          {{!verTablaDev ? 'visibility':'visibility_off'}}  
+        </span>
+      </button>
+</div>
+
+
+<table class="table table-bordered table-striped border-primary text-center table-sm">
+    <thead>
+        <tr>
+          <th scope="col">Id cliente</th>
+          <th scope="col">Nombre cliente</th>
+          <th scope="col">Apellido cliente</th>
+          <th scope="col">Edad cliente</th>
+          <th scope="col">Direccion cliente</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let cliente of listaClientes">
+          <td>{{cliente.idCliente}}</td>
+          <td>{{cliente.nombre}}</td>
+          <td>{{cliente.apellido}}</td>
+          <td>{{cliente.edad}}</td>
+          <td>{{cliente.direccion}}</td>
+          <td>
+            <div class="d-flex justify-content-center">
+            <button mat-stroked-button color="primary" class="m-1" (click)="irEditar(cliente.idCliente.toString())">
+                <span class="material-symbols-outlined">
+                    edit_note
+                    </span>
+            </button>
+        
+            <button mat-stroked-button color="warn" class="m-1" (click)="mostrarAlerta()">
+                <span class="material-symbols-outlined">
+                    delete
+                    </span>
+            </button>
+            <button mat-stroked-button color="primary" class="m-1" (click)="irComprar(cliente.idCliente.toString())">
+              <span class="material-symbols-outlined">
+                shopping_cart_checkout
+                </span>
+            </button>
+          </div>
+          </td>
+        </tr>
+</table>
+
+<div class="text-center" *ngIf="!verTablaDev; else tablaDevExpress">
+    <img class="img-fluid" src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/angular-512.png" width="100">
+</div>
+  
+<ng-template #tablaDevExpress>
+    <dx-data-grid
+  [dataSource]="listaClientes"
+  [remoteOperations]="false"
+  [allowColumnReordering]="true"
+  [rowAlternationEnabled]="true"
+  [showBorders]="true"
+  keyExpr="idCliente"
+>
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[10, 25, 50, 100]"
+  ></dxo-pager>
+  <dxo-search-panel
+    [visible]="true"
+    [highlightCaseSensitive]="true"
+  ></dxo-search-panel>
+  <dxo-group-panel [visible]="false"></dxo-group-panel>
+  <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+  <dxi-column dataField="idCliente" dataType="number"></dxi-column>
+  <dxi-column dataField="nombre" dataType="string"></dxi-column>
+  <dxi-column dataField="apellido"></dxi-column>
+  <dxi-column dataField="edad" dataType="string"></dxi-column>
+  <dxo-editing
+    mode="popup"
+    [allowUpdating]="true"
+    [allowDeleting]="true"
+    [allowAdding]="true"
+  >
+  </dxo-editing>
+</dx-data-grid>
+</ng-template>
+
+

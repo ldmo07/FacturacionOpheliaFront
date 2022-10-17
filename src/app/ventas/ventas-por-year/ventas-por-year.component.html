@@ -1,0 +1,47 @@
+
+<div class="form-inline mb-3 justify-content-center  align-items-center">
+
+    <button (click)="irVentasPorEdadYear()" mat-stroked-button color="primary" class="m-1">
+      Ver ventas por edad y fechas
+      <span class="material-symbols-outlined">
+        calendar_month
+        </span>
+    </button>
+        
+</div>
+<table class="table table-bordered border-primary text-center table-striped table-sm">
+    <thead>
+      <tr>
+        <td colspan="5"><h2>Total Ventas Por año (Por defecto trae las venta del 2000)</h2></td>
+      </tr>
+        <tr>
+            <th colspan="5">
+                <div class="col  row m-3">
+                    <input #year placeholder ="ingrese el año" type="number" class="form col-2 m-1" min="1900" max="3000">
+                    
+                    <button class="btn btn-primary col-9 text-left" 
+                    (click)="ListarVentasProductosPorYear(year.value)">Filtrar por Año</button>
+                  </div>
+                
+            </th>
+        </tr>
+        <tr>
+          <th scope="col">Nombre Producto</th>
+          <th scope="col">Precio producto</th>
+          <th scope="col">Cantidad vendida</th>
+          <th scope="col">Total Vendido</th>
+          <th scope="col">Fecha Compra</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let venta of listaVentasProductosPorYear">
+          <td>{{venta.nombre}}</td>
+          <td>{{venta.precio}}</td>
+          <td>{{venta.cantidad}}</td>
+          <td>{{venta.total|currency}}</td>
+          <td>{{venta.fechaCompra}}</td>
+          
+        </tr>
+  </table>
+

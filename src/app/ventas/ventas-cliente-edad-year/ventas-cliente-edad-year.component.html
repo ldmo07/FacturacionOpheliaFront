@@ -1,0 +1,46 @@
+
+<div class="form-inline mb-3 justify-content-center  align-items-center">
+
+    <button (click)="irVentasPorYear()" mat-stroked-button color="primary" class="m-1">
+      Ver ventas por año
+      <span class="material-symbols-outlined">
+        real_estate_agent
+        </span>
+    </button>
+        
+</div>
+
+<table class="table table-bordered border-primary text-center table-striped table-sm">
+    <thead>
+      <tr>
+        <td colspan="5"><h2>Total Ventas Por año y Edad (Por defecto trae las venta del 2000 y edades menore a 35)</h2></td>
+      </tr>
+        <tr>
+            <th colspan="5">
+                <div class="col  row m-3">
+                    <input #fecha1 placeholder ="ingrese el año" type="date" class="form col-3 m-1">
+                    <input #fecha2 placeholder ="ingrese el año" type="date" class="form col-3 m-1" >
+                    <input #edad placeholder ="ingrese el año" type="number" class="form col-3 m-1" >
+                    <button class="btn btn-primary col-2 text-left" 
+                    (click)="ListarComprasClientePorEdadEntreDosFechas(fecha1.value, fecha2.value, edad.value)">Filtrar por año y edad</button>
+                  </div>
+                
+            </th>
+        </tr>
+        <tr>
+          <th scope="col">Id cliente</th>
+          <th scope="col">Nombres y apellidos del Cliente</th>
+          <th scope="col">Edad</th>
+          <th scope="col">Fecha Compra</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compra of listaComprasPorEdadFechas">
+          <td>{{compra.idCliente}}</td>
+          <td>{{compra.cliente}}</td>
+          <td>{{compra.edad}}</td>
+          <td>{{compra.fechaCompra}}</td>
+          
+        </tr>
+  </table>

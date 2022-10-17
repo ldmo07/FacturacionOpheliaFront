@@ -1,0 +1,156 @@
+
+<div class="form-inline mb-3 justify-content-center  align-items-center">
+
+  <button (click)="irAgregar()" mat-stroked-button color="primary" class="m-1">
+    Agregar
+    <span class="material-symbols-outlined">
+        add
+        </span>
+  </button>
+    
+    <button (click)="mostrarTablaDev()" mat-stroked-button color="primary" class="m-1">
+      {{!verTablaDev ? 'Ver tabla DevExpres': 'Ocultar tabla DevExpres'}}
+      <span class="material-symbols-outlined">
+        {{!verTablaDev ? 'visibility':'visibility_off'}}  
+      </span>
+    </button>
+
+  <button (click)="mostrarAgotados()" mat-stroked-button color="primary" class="m-1">
+    {{!verAgotados ? 'Ver productos agotados ': 'Ocultar productos agotados'}}
+    <span class="material-symbols-outlined">
+      {{!verAgotados ? 'visibility':'visibility_off'}}  
+    </span>
+  </button>
+
+  <button (click)="mostrarPrecios()" mat-stroked-button color="primary" class="m-1">
+    {{!verPrecios? 'Ver lista de precios ': 'Ocultar lista de precios'}}
+    <span class="material-symbols-outlined">
+      {{!verPrecios ? 'visibility':'visibility_off'}}  
+    </span>
+  </button>
+
+</div>
+
+<table class="table table-bordered border-primary text-center table-striped table-sm">
+  <thead>
+      <tr>
+        <th scope="col">Id Producto</th>
+        <th scope="col">Nombre Producto</th>
+        <th scope="col">Precio producto</th>
+        <th scope="col">En stock</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let producto of listaProductos">
+        <td>{{producto.idProducto}}</td>
+        <td>{{producto.nombre}}</td>
+        <td>{{producto.precio}}</td>
+        <td [ngClass]="{'text-danger':producto.stock==5}">{{producto.stock}}</td>
+        <td>
+          <div class="d-flex justify-content-center">
+          <button mat-stroked-button color="primary" class="m-1" (click)="irEditar(producto.idProducto.toString())">
+              <span class="material-symbols-outlined">
+                  edit_note
+                  </span>
+          </button>
+      
+          <button mat-stroked-button color="warn" class="m-1" (click)="mostrarAlerta()">
+              <span class="material-symbols-outlined">
+                  delete
+                  </span>
+          </button>
+        </div>
+        </td>
+      </tr>
+</table>
+
+<div class="text-center" *ngIf="!verAgotados; else tablaAgotados">
+</div>
+
+<div class="text-center" *ngIf="!verPrecios; else tablaPrecios">
+</div>
+
+<div class="text-center" *ngIf="!verTablaDev; else tablaDevExpress">
+  <img class="img-fluid" src="https://cdn2.iconfinder.com/data/icons/designer-skills/128/angular-512.png" width="100">
+</div>
+
+<ng-template #tablaDevExpress>
+<dx-data-grid
+  [dataSource]="listaProductos"
+  [remoteOperations]="false"
+  [allowColumnReordering]="true"
+  [rowAlternationEnabled]="true"
+  [showBorders]="true"
+  keyExpr="idProducto"
+>
+  <dxo-paging [pageSize]="10"></dxo-paging>
+  <dxo-pager
+    [showPageSizeSelector]="true"
+    [allowedPageSizes]="[10, 25, 50, 100]"
+  ></dxo-pager>
+  <dxo-search-panel
+    [visible]="true"
+    [highlightCaseSensitive]="true"
+  ></dxo-search-panel>
+  <dxo-group-panel [visible]="false"></dxo-group-panel>
+  <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+  <dxi-column dataField="idProducto" dataType="number"></dxi-column>
+  <dxi-column dataField="nombre" dataType="string"></dxi-column>
+  <dxi-column
+    dataField="precio"
+    format="currency"
+    dataType="number"
+  ></dxi-column>
+  <dxi-column dataField="stock" dataType="string"></dxi-column>
+  <dxo-editing
+    mode="popup"
+    [allowUpdating]="true"
+    [allowDeleting]="true"
+    [allowAdding]="true"
+  >
+  </dxo-editing>
+</dx-data-grid>
+</ng-template>
+
+<ng-template #tablaAgotados>
+  <table class="table table-bordered border-danger text-center table-striped table-sm">
+    <thead>
+      <tr>
+        <td colspan="3"><h2>Productos Agotados</h2></td>
+      </tr>
+        <tr>
+          <th scope="col">Nombre Producto</th>
+          <th scope="col">Precio producto</th>
+          <th scope="col">En stock</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of listaProductosAgotados">
+          <td>{{producto.nombre}}</td>
+          <td>{{producto.precio}}</td>
+          <td [ngClass]="{'text-danger':producto.stock==5}">{{producto.stock}}</td>
+        </tr>
+  </table>
+</ng-template>
+
+<ng-template #tablaPrecios>
+  <table class="table table-bordered border-success text-center table-striped table-sm">
+    <thead>
+      <tr>
+        <td colspan="2"><h2>Listado de precios</h2></td>
+      </tr>
+        <tr>
+          <th scope="col">Nombre Producto</th>
+          <th scope="col">Precio producto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of listaProductos">
+          <td>{{producto.nombre}}</td>
+          <td>{{producto.precio}}</td>
+        </tr>
+  </table>
+</ng-template>
+
